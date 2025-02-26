@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
       required: true,
       lowercase: true,
     },
-    name: {
+    password: {
       type: String,
       required: true,
       select: false,
@@ -54,4 +54,17 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-export const User=mongoose.model("User",userSchema);
+userSchema.methods.generateVerificationCode = function () {
+  function generateRandomFiveDigitNumber() {
+    const firstDigit = Math.floor(Math.random() * 9) + 1;
+    const remainingDigit = Math.floor(Math.random() * 10000)
+      .toString()
+      .padStart(4, 0);
+    return parseInt(firstDigit + remainingDigit);
+  }
+  const verificationCode = generateRandomFiveDigitNumber();
+  this.verificationCode = verificationCode;
+  this.verificationCodeExpire = Date.now() + 15 * 60 * 1000;
+  return verificationCode;
+};
+export const User = mongoose.model("User", userSchema);
