@@ -61,7 +61,7 @@ export const returnBorrowBook = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("User is not found", 404));
   }
   const borrowedBook = user.borrowedBooks.find(
-    (b) => b.bookId.toString() === id && b.returned === false
+    (b) => b.bookId.toString() === bookId && b.returned === false
   );
   if (!borrowedBook) {
     return next(new ErrorHandler("You have not borrowed this book.", 404));
@@ -93,7 +93,19 @@ export const returnBorrowBook = catchAsyncErrors(async (req, res, next) => {
         : `  The book has been returned successfully. The total charges are ₹ ${book.price}`,
   });
 });
-export const borrowedBooks = catchAsyncErrors(async (req, res, next) => {});
+export const borrowedBooks = catchAsyncErrors(async (req, res, next) => {
+  const { borrowedBooks } = req.user;
+  res.status(200).json({
+    success: true,
+    borrowedBooks,
+  });
+});
 export const getBorrowedBookForAdmin = catchAsyncErrors(
-  async (req, res, next) => {}
+  async (req, res, next) => {
+    const borrowedBook = await Borrow.find();
+    res.status(200).json({
+      success: true,
+      borrowedBook,
+    });
+  }
 );

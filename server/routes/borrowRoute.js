@@ -27,7 +27,6 @@ router.get("/my-borrowed-books", isAuthenticated, borrowedBooks);
 router.put(
   "/return-borrowed-book/:bookId",
   isAuthenticated,
-  isAuthorized("Admin"),
   returnBorrowBook
 );
 export default router;
