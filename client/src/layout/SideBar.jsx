@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import logo_with_title from "../assets/logo-with-title.png";
+import kashmirlog from "../assets/University of Kashmir logo (1).jpeg";
 import logoutIcon from "../assets/logout.png";
 import closeIcon from "../assets/white-close-icon.png";
 import dashboardIcon from "../assets/element.png";
@@ -10,10 +11,12 @@ import usersIcon from "../assets/people.png";
 import { RiAdminFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, resetAuthSlice } from "../store/slices/authSlice";
-import {toast} from 'react-toastify'
+import { toast } from "react-toastify";
+import { toggleAddNewAdminPopup } from "../store/slices/popUpSlice";
+import AddNewAdmin from '../popups/AddNewAdmin'
 const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
   const dispatch = useDispatch();
-  //const { addNewAdminPopup } = useSelector((state) => state.popup);
+  const { addNewAdminPopup } = useSelector((state) => state.popup);
 
   const { loading, error, message, isAuthenticated, user } = useSelector(
     (state) => state.auth
@@ -42,8 +45,13 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
         } z-10 transition-all duration-700 md:relative md:left-0 flex w-64 bg-black text-white flex-col h-full`}
         style={{ position: "fixed" }}
       >
-        <div className="px-6 py-4 my-8">
-          <img src={logo_with_title} alt="logo" />
+        <div className="px-12 py-1 my-2">
+          <img
+            src={
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXLPOegmJM8d407ckOwZBoUw0_Up9Y5gYKbg&s"
+            }
+            alt="logo"
+          />
         </div>
         <nav className="flex-1 px-6 space-y-2">
           <button
@@ -90,7 +98,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
             </button>
           )}
           <button
-            onClick={() => dispatch(toggleSettingPopup())}
+            onClick={() => dispatch()}
             className="md:hidden w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
           >
             <img src={settingIcon} alt="setting" />{" "}

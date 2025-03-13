@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ForgotPassword from "./pages/ForgotPassword";
 import Login from "./pages/Login";
-import Register from "./pages/Login";
+import Register from "./pages/Register";
 import OTP from "./pages/OTP";
 import ResetPassword from "./pages/ResetPassword";
 import  {ToastContainer} from 'react-toastify'
