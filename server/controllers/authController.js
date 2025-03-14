@@ -68,6 +68,7 @@ export const verifyOtp = catchAsyncErrors(async (req, res, next) => {
     if (!userAllEntries) {
       return next(new ErrorHandler("User not found", 404));
     }
+
     let user;
     if (userAllEntries.length > 1) {
       user = userAllEntries[0];
@@ -83,7 +84,6 @@ export const verifyOtp = catchAsyncErrors(async (req, res, next) => {
       return next(new ErrorHandler("Invalid OTP.", 400));
     }
     const currentTime = Date.now();
-
     const verificationCodeExpire = new Date(
       user.verificationCodeExpire
     ).getTime();
@@ -96,6 +96,8 @@ export const verifyOtp = catchAsyncErrors(async (req, res, next) => {
     await user.save({ validateModifiedOnly: true });
     sendToken(user, 200, "Account Verified", res);
   } catch (error) {
+    console.log(error.message);
+    
     return next(new ErrorHandler("Internal server error.", 500));
   }
 });

@@ -63,7 +63,7 @@ const authSlice = createSlice({
         (state.user = null),
         (state.isAuthenticated = false);
     },
-  
+
     forgotPasswordRequest(state) {
       (state.loading = true), (state.message = null), (state.error = null);
     },
@@ -88,7 +88,7 @@ const authSlice = createSlice({
     },
     updatePasswordSuccess(state, action) {
       (state.loading = false), (state.message = action.payload);
-      (state.isAuthenticated = true);
+      state.isAuthenticated = true;
     },
     updatePasswordFailed(state, action) {
       (state.loading = false), (state.error = action.payload);
@@ -123,7 +123,9 @@ export const register = (data) => async (dispatch) => {
     });
 };
 export const otpVerification = (email, otp) => async (dispatch) => {
-  dispatch(authSlice.actions.otpVerificationRequest());
+
+
+  dispatch(authSlice.actions.otpVerificationRequest())
   await axios
     .post(
       "http://localhost:4000/api/v1/auth/verify-otp",
@@ -210,6 +212,10 @@ export const forgotPassword = (email) => async (dispatch) => {
     });
 };
 export const resetPassword = (data, token) => async (dispatch) => {
+  console.log(data);
+  console.log(token);
+  
+  
   dispatch(authSlice.actions.resetPasswordRequest());
   await axios
     .put(`http://localhost:4000/api/v1/auth/password/reset/${token}`, data, {
@@ -245,4 +251,4 @@ export const updatePassword = (data) => async (dispatch) => {
       );
     });
 };
-export default authSlice.reducer
+export default authSlice.reducer;

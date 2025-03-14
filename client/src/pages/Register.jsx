@@ -7,9 +7,9 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { register, resetAuthSlice } from "../store/slices/authSlice";
 import { toast } from "react-toastify";
 const Register = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const { loading, error, message, user, isAuthenticated } = useSelector(
     (state) => state.auth
@@ -25,16 +25,19 @@ const Register = () => {
   };
   useEffect(() => {
     if (message) {
+      toast.success(message)
+      dispatch(resetAuthSlice())
       navigate(`/otp-verification/${email}`);
     }
     if (error) {
       toast.error(error);
       dispatch(resetAuthSlice());
     }
-    if (isAuthenticated) {
-      return <Navigate to={"/"} />;
-    }
+   
   }, [dispatch, isAuthenticated, error, loading]);
+  if (isAuthenticated) {
+    return <Navigate to={"/"} />;
+  }
   return (
     <>
       <div className="flex flex-col justify-center md:flex-row h-screen">
@@ -71,7 +74,7 @@ const Register = () => {
                   Sign Up
                 </h3>
                 <img
-                  src={kashmirlogo}
+                  src={'https://upload.wikimedia.org/wikipedia/en/6/6f/University_of_Kashmir_logo.png'}
                   alt="logo"
                   className="h-auto w-24 object-cover"
                 />
@@ -90,14 +93,14 @@ const Register = () => {
                   className="w-full px-4 py-3 mb-2 border border-black rounded-md focus:outline-none"
                 />
                   <input
-                  type="text"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
                   className="w-full px-4 py-3 mb-2 border border-black rounded-md focus:outline-none"
                 />
                   <input
-                  type="text"
+                  type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"

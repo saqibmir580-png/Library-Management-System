@@ -3,7 +3,8 @@ import { PiKeyReturnBold } from "react-icons/pi";
 import { FaSquareCheck } from "react-icons/fa6";
 
 const Catalog = () => {
-  return <></>;
+  return <>
+  cateh</>;
 };
 
 export default Catalog;

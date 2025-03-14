@@ -12,7 +12,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, resetAuthSlice } from "../store/slices/authSlice";
 import { toast } from "react-toastify";
-import { toggleAddNewAdminPopup } from "../store/slices/popUpSlice";
+import { toggleAddNewAdminPopup, toggleSettingPopup } from "../store/slices/popUpSlice";
 import AddNewAdmin from '../popups/AddNewAdmin'
 const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
   const dispatch = useDispatch();
@@ -75,7 +75,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
                 <img src={catalogIcon} alt="catalog" /> <span>Catalog</span>
               </button>
               <button
-                onClick={() => setSelectedComponent("Users")}
+                onClick={() => setSelectedComponent("User")}
                 className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
               >
                 <img src={usersIcon} alt="users" /> <span>Users</span>
@@ -98,7 +98,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
             </button>
           )}
           <button
-            onClick={() => dispatch()}
+            onClick={() => dispatch(toggleSettingPopup())}
             className="md:hidden w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
           >
             <img src={settingIcon} alt="setting" />{" "}
