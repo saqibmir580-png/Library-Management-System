@@ -50,7 +50,7 @@ const Header = () => {
             src={settingIcon}
             alt="settingicon"
             className="w-8 h-8"
-            onClick={() => toggleSettingPopup()}
+            onClick={() => dispatch(toggleSettingPopup())}
           />
         </div>
       </header>

@@ -14,9 +14,10 @@ import { logout, resetAuthSlice } from "../store/slices/authSlice";
 import { toast } from "react-toastify";
 import { toggleAddNewAdminPopup, toggleSettingPopup } from "../store/slices/popUpSlice";
 import AddNewAdmin from '../popups/AddNewAdmin'
+import SettingPopup from '../popups/SettingPopup'
 const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
   const dispatch = useDispatch();
-  const { addNewAdminPopup } = useSelector((state) => state.popup);
+  const { addNewAdminPopup, settingPopup } = useSelector((state) => state.popup);
 
   const { loading, error, message, isAuthenticated, user } = useSelector(
     (state) => state.auth
@@ -61,7 +62,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
             <img src={dashboardIcon} alt="dashboard" /> <span>Dashboard</span>
           </button>
           <button
-            onClick={() => setSelectedComponent("Books")}
+            onClick={() => setSelectedComponent("Book")}
             className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
           >
             <img src={bookIcon} alt="books" /> <span>Books</span>
@@ -90,16 +91,16 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
           )}
           {isAuthenticated && user?.role === "User" && (
             <button
-              onClick={() => setSelectedComponent("My Borrowed Books")}
+              onClick={() => setSelectedComponent("MyBorrowedBooks")}
               className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
             >
-              <img src={catalogIcon} alt="my-borrowed-books" />{" "}
+              <img src={catalogIcon} alt="my-borrowed-book" />{" "}
               <span>My Borrowed Books</span>
             </button>
           )}
           <button
             onClick={() => dispatch(toggleSettingPopup())}
-            className="md:hidden w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
+            className="w-full py-2 font-medium bg-transparent rounded-md hover:cursor-pointer flex items-center space-x-2"
           >
             <img src={settingIcon} alt="setting" />{" "}
             <span>Update Credentials</span>
@@ -121,6 +122,7 @@ const SideBar = ({ isSideBarOpen, setIsSideBarOpen, setSelectedComponent }) => {
         />
       </aside>
       {addNewAdminPopup && <AddNewAdmin />}
+      { settingPopup && <SettingPopup />}
     </>
   );
 };

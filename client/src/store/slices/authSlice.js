@@ -179,7 +179,7 @@ export const logout = () => async (dispatch) => {
 export const getUser = () => async (dispatch) => {
   dispatch(authSlice.actions.getUserRequest());
   await axios
-    .post("http://localhost:4000/api/v1/auth/me", {
+    .get("http://localhost:4000/api/v1/auth/me", {
       withCredentials: true,
     })
     .then((res) => {

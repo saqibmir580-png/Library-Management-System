@@ -11,7 +11,7 @@ import userRouter from "./routes/userRoute.js";
 import expressFileUpload from "express-fileupload";
 import { notifyUser } from "./services/notifyUser.js";
 import { removeUnverifiedAccounts } from "./services/removeUnverifiedAccount.js";
-config({ path: "./config/.env" });
+config({ path: "./config/config.env" });
 export const app = express();
 
 app.use(
