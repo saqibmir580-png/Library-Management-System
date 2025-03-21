@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
+import { toggleReadBookPopup } from "./popUpSlice";
 const borrowSlice = createSlice({
   name: "borrow",
   initialState: {
@@ -26,7 +28,6 @@ const borrowSlice = createSlice({
     },
     recordBookFailed(state, action) {
       (state.loading = true), (state.error = null), (state.message = null);
-      state.message = null;
     },
     fetchAllBorrowedBooksRequest(state) {
       (state.loading = true), (state.error = null), (state.message = null);
@@ -36,6 +37,7 @@ const borrowSlice = createSlice({
     },
     fetchAllBorrowedBooksFailed(state, action) {
       (state.loading = false), (state.error = action.payload);
+      state.message = null;
     },
     returnBookRequest(state) {
       (state.loading = true), (state.error = null), (state.message = null);
@@ -58,7 +60,7 @@ export const fetchUserBorrowedBooks = () => async (dispatch) => {
     .get("http://localhost:4000/api/v1/borrow/my-borrowed-books", {
       withCredentials: true,
       headers: {
-      "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
     })
     .then((res) => {
@@ -81,13 +83,10 @@ export const fetchAllBorrowedBooks = () => async (dispatch) => {
   await axios
     .get("http://localhost:4000/api/v1/borrow/borrowed-books-by-users", {
       withCredentials: true,
-      headers: {
-      "Content-Type": "application/json",
-      },
     })
     .then((res) => {
       dispatch(
-        borrowSlice.actions.fetchAllBorrowedBooksSuccess(res.data.users)
+        borrowSlice.actions.fetchAllBorrowedBooksSuccess(res.data.borrowedBooks)
       );
     })
     .catch((err) => {
@@ -98,51 +97,48 @@ export const fetchAllBorrowedBooks = () => async (dispatch) => {
       );
     });
 };
-export const recordBorrowedBook = (email,id) => async (dispatch) => {
-    dispatch(borrowSlice.actions.recordBookRequest());
-    await axios
-      .post(`http://localhost:4000/api/v1/borrow/record-borrow-book/${id}`,{email}, {
+export const recordBorrowedBook = (email, id) => async (dispatch) => {
+  dispatch(borrowSlice.actions.recordBookRequest());
+  await axios
+    .post(
+      `http://localhost:4000/api/v1/borrow/record-borrow-book/${id}`,
+      { email },
+      {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
-      })
-      .then((res) => {
-        dispatch(
-          borrowSlice.actions.recordBookSuccess(res.data.message)
-        );
-      })
-      .catch((err) => {
-        dispatch(
-          borrowSlice.actions.recordBookFailed(
-            err.response.data.message
-          )
-        );
-      });
-  };
-  export const returnBook = (email,id) => async (dispatch) => {
-    dispatch(borrowSlice.actions.returnBookRequest());
-    await axios
-      .put(`http://localhost:4000/api/v1/borrow/return-borrowed-book/${id}`,{email}, {
+      }
+    )
+    .then((res) => {
+      dispatch(borrowSlice.actions.recordBookSuccess(res.data.message));
+      dispatch(toggleReadBookPopup());
+    })
+    .catch((err) => {
+      dispatch(borrowSlice.actions.recordBookFailed(err.response.data.message));
+    });
+};
+export const returnBook = (email, id) => async (dispatch) => {
+  dispatch(borrowSlice.actions.returnBookRequest());
+  await axios
+    .put(
+      `http://localhost:4000/api/v1/borrow/return-borrowed-book/${id}`,
+      { email },
+      {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
         },
-      })
-      .then((res) => {
-        dispatch(
-          borrowSlice.actions.returnBookSuccess(res.data.message)
-        );
-      })
-      .catch((err) => {
-        dispatch(
-          borrowSlice.actions.returnBookFailed(
-            err.response.data.message
-          )
-        );
-      });
-  };
-  export const resetBorrowslice=()=>(dispatch)=>{
-    dispatch(borrowSlice.actions.resetBorrowSlice())
-  }
-export default borrowSlice.reducer
+      }
+    )
+    .then((res) => {
+      dispatch(borrowSlice.actions.returnBookSuccess(res.data.message));
+    })
+    .catch((err) => {
+      dispatch(borrowSlice.actions.returnBookFailed(err.response.data.message));
+    });
+};
+export const resetBorrowslice = () => (dispatch) => {
+  dispatch(borrowSlice.actions.resetBorrowSlice());
+};
+export default borrowSlice.reducer;

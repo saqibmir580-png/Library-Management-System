@@ -23,6 +23,8 @@ const BookManagement = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { addBookPopup, readBookPopup, recordBookPopup, returnBookPopup } =
     useSelector((state) => state.popup);
+  
+    
   const {
     loading: borrowSliceLoading,
     error: borrowSliceErro,
@@ -35,6 +37,8 @@ const BookManagement = () => {
     dispatch(toggleReadBookPopup());
   };
   const [borrowBookId, setBorrowBookId] = useState("");
+ 
+  
   const openRecordBookPopup = (bookId) => {
     setBorrowBookId(bookId);
     dispatch(toggleRecordBookPopup());

@@ -21,7 +21,7 @@ const popupSlice = createSlice({
       state.readBookPopup = !state.readBookPopup;
     },
     toggleRecordBookPopup(state) {
-      state.readBookPopup = !state.readBookPopup;
+      state.recordBookPopup = !state.recordBookPopup;
     },
     toggleAddNewAdminPopup(state) {
       state.addNewAdminPopup = !state.addNewAdminPopup;

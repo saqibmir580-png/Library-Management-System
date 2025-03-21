@@ -3,6 +3,7 @@ import { BookA } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleReadBookPopup } from "../store/slices/popUpSlice";
 import Header from "../layout/Header";
+import ReadBookPopup from "../popups/ReadBookPopup";
 
 const MyBorrowedBooks = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,7 @@ const MyBorrowedBooks = () => {
     return book.returned === false;
   });
   const booksToDiplay = filter === "returned" ? returnedBook : nonReturnedBook;
+
   return (
     <>
       <main className="relative flex-1 p-6 pt-28">
@@ -67,9 +69,8 @@ const MyBorrowedBooks = () => {
           </button>
         </header>
 
-        {
-          booksToDiplay && booksToDiplay.length>0 ?(
-            <div className="mt-6 overflow-auto bg-white rounded-md shadow-lg">
+        {booksToDiplay && booksToDiplay.length > 0 ? (
+          <div className="mt-6 overflow-auto bg-white rounded-md shadow-lg">
             <table className="min-w-full border-collapse">
               <thead>
                 <tr className="bg-gray-200">
@@ -82,22 +83,35 @@ const MyBorrowedBooks = () => {
                 </tr>
               </thead>
               <tbody>
-                {
-                  booksToDiplay.map((book,index)=>(
-                  <tr key={index} className={(index+1)%2==0?"bg-gray-50":""}>
-                   <td className="px-4  py-2">{index+1}</td>
-                   <td className="px-4  py-2">{book.bookTitle}</td>
-                   <td className="px-4  py-2">{book.borrowDate}</td>
-                   <td className="px-4  py-2">{book.dueDate}</td>
+                {booksToDiplay.map((book, index) => (
+                  <tr
+                    key={index}
+                    className={(index + 1) % 2 == 0 ? "bg-gray-50" : ""}
+                  >
+                    <td className="px-4  py-2">{index + 1}</td>
+                    <td className="px-4  py-2">{book.bookTitle}</td>
+                    <td className="px-4  py-2">{book.borrowDate}</td>
+                    <td className="px-4  py-2">{formDate(book.dueDate)}</td>
+                    <td className="px-4  py-2">
+                      {book.returned ? "Yes" : "No"}
+                    </td>
+                    <td className="px-4  py-2">
+                      <BookA onClick={() => openReadPopup(book.bookId)} />
+                    </td>
                   </tr>
-                  ))
-                }
+                ))}
               </tbody>
             </table>
-            </div>
-          ):("")
-        }
+          </div>
+        ) : filter === "returned" ? (
+          <h3 className="text-3xl font-medium">No retuned books found!</h3>
+        ) : (
+          <h3 className="text-3xl font-medium">No non-retuned books found!</h3>
+        )}
       </main>
+      {
+        readBookPopup && <ReadBookPopup book={readBook}/>
+      }
     </>
   );
 };
