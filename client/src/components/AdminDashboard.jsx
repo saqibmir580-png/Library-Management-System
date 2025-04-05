@@ -103,11 +103,11 @@ const AdminDashboard = () => {
             </div>
           </div>
           {/* right */}
-          <div className="flex flex-[4] flex-col gap-7 lg:gap-7 lg:py-5 justify-between xl:min-h-[85.5vh]">
+          <div className="flex flex-[4] flex-col gap-7 lg:gap-7 lg:py-5 justify-between xl:min-h-[120.5vh]">
             <div className="flex flex-col-reverse lg:flex-row gap-7 flex-[4]">
               <div className="flex flex-col gap-7 flex-1">
                 <div className="flex items-center gap-3 bg-white p-5 min-h-[120px] overflow-y-hidden rounded-lg transition hover:shadow-inner duration-300 w-full lg:max-w-[360px]">
-                  <span className="bg-gray-300 h-20 lg:h-full min-w-20 flex justify-center items-center rounded-lg">
+                  <span className="bg-gray-300 h-20  min-w-20 flex justify-center items-center rounded-lg">
                     <img src={usersIcon} className="w-8 h-8" alt="icon" />
                   </span>
                   <span className="w-[2px] bg-black h-20 lg:h-full"></span>
@@ -159,16 +159,20 @@ const AdminDashboard = () => {
                       the settings and monitor the statistics.
                     </p>
                   </div>
+                  
                 </div>
+                
               </div>
+              
             </div>
-            <div className="hidden xl:flex bg-white p-7 text-lg sm:text-3xl 2xl:text-4xl min-h-52 font-semibold relative flex-[3] justify-center items-center rounded-xl">
+            <div className="hidden xl:flex bg-white p-8 text-lg sm:text-xl xl:text-3xl 2xl:text-4xl min-h-52 font-semibold relative flex-[3] justify-center items-center rounded-2xl">
               <h4 className="overflow-y-hidden">"Embarking on the journy of reading fosters personal growth,nurturing a path towards excellence and refinedment of character."</h4>
               <p className="text-gray-700 text-sm sm:text-lg absolute right-[35px] sm:right-[78px] bottom-[10px]">
                 ~North Library system
               </p>
             </div>
           </div>
+          
         </div>
       </main>
     </>
