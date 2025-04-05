@@ -17,7 +17,7 @@ export const app = express();
 const _dirname=path.resolve()
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL],
+    origin:"https://library-management-system-me5l.onrender.com",
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
