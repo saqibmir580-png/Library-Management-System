@@ -74,9 +74,6 @@ const UserDashboard = () => {
                   <p className="text-lg xl:text-xl font-semibold">
                     Your Borrowed Book List
                   </p>
-                  <span className="font-black text-3xl">
-                    {totalBorrowedBooks}
-                  </span>
                 </div>
                 <div className="flex items-center gap-3 bg-white p-5 min-h-[120px] overflow-y-hidden rounded-lg transition hover:shadow-inner duration-300">
                   <span className="w-[2px] bg-black h-20 lg:h-full"></span>

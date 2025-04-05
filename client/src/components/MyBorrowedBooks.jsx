@@ -27,6 +27,8 @@ const MyBorrowedBooks = () => {
     const result = `${formatedDate} ${formatTime}`;
     return result;
   };
+  console.log(userBorrowedBooks);
+  
   const [filter, setFilter] = useState("returned");
   const returnedBook = userBorrowedBooks?.filter((book) => {
     return book.returned === true;
@@ -84,13 +86,15 @@ const MyBorrowedBooks = () => {
               </thead>
               <tbody>
                 {booksToDiplay.map((book, index) => (
+                 
+                  
                   <tr
                     key={index}
                     className={(index + 1) % 2 == 0 ? "bg-gray-50" : ""}
                   >
                     <td className="px-4  py-2">{index + 1}</td>
                     <td className="px-4  py-2">{book.bookTitle}</td>
-                    <td className="px-4  py-2">{formDate(book.borrowDate)}</td>
+                    <td className="px-4  py-2">{formDate(book.borrowedDate)}</td>
                     <td className="px-4  py-2">{formDate(book.dueDate)}</td>
                     <td className="px-4  py-2">
                       {book.returned ? "Yes" : "No"}
@@ -109,9 +113,7 @@ const MyBorrowedBooks = () => {
           <h3 className="text-3xl font-medium">No non-retuned books found!</h3>
         )}
       </main>
-      {
-        readBookPopup && <ReadBookPopup book={readBook}/>
-      }
+      {readBookPopup && <ReadBookPopup book={readBook} />}
     </>
   );
 };

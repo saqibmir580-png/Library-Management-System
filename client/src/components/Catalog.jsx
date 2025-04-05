@@ -14,11 +14,12 @@ import Header from "../layout/Header";
 const Catalog = () => {
   const dispatch = useDispatch();
   const { returnBookPopup } = useSelector((state) => state.popup);
+  const { users } = useSelector((state) => state.user);
+  console.log(users[0].name);
 
   const { loading, error, allBorrowedBooks, message } = useSelector(
     (state) => state?.borrow
   );
-
 
   const [filter, setFilter] = useState("borrowed");
   const formDateAndTime = (timeStamp) => {
@@ -56,6 +57,13 @@ const Catalog = () => {
     setEmail(email);
     dispatch(toggleReturnBookPopup());
   };
+  const [searchedKeyword, setSearchedKeyword] = useState("");
+  const handleSearch = (e) => {
+    setSearchedKeyword(e.target.value.toLowerCase());
+  };
+  const searchedBooks = users.filter((user) =>
+    user.email.toLowerCase().includes(searchedKeyword)
+  );
   useEffect(() => {
     if (message) {
       toast.success(message);
@@ -68,6 +76,7 @@ const Catalog = () => {
       dispatch(resetBorrowslice());
     }
   }, [dispatch, error, loading, message]);
+
   return (
     <>
       <main className="relative flex-1 p-6 pt-28">
@@ -94,6 +103,13 @@ const Catalog = () => {
           >
             Overdue Borrowers
           </button>
+          <input
+            type="text"
+            placeholder="Search Email..."
+            className="w-full sm:w-52 border p-2 border-gray-300 rounded-md"
+            value={searchedKeyword}
+            onChange={handleSearch}
+          />
         </header>
 
         {booksToDiplay && booksToDiplay.length > 0 ? (
@@ -139,6 +155,9 @@ const Catalog = () => {
                   </tr>
                 ))}
               </tbody>
+              <tbody>
+               
+              </tbody>
             </table>
           </div>
         ) : (
@@ -147,7 +166,9 @@ const Catalog = () => {
           </h3>
         )}
       </main>
-      {returnBookPopup && <ReturnBookPopup bookId={borrowedBookId} email={email} />}
+      {returnBookPopup && (
+        <ReturnBookPopup bookId={borrowedBookId} email={email} />
+      )}
     </>
   );
 };

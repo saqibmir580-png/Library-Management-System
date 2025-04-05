@@ -30,7 +30,7 @@ export const recordBorrowedBook = catchAsyncErrors(async (req, res, next) => {
   user.borrowedBooks.push({
     bookId: book._id,
     bookTitle: book.title,
-    borrowDate: new Date(),
+    borrowedDate: new Date(),
     dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   });
   await user.save();
