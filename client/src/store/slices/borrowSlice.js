@@ -36,7 +36,7 @@ const borrowSlice = createSlice({
       (state.loading = false), (state.allBorrowedBooks = action.payload);
     },
     fetchAllBorrowedBooksFailed(state, action) {
-      (state.loading = false), (state.error = action.payload);
+      (state.loading = true), (state.error = action.payload);
       state.message = null;
     },
     returnBookRequest(state) {
@@ -59,9 +59,6 @@ export const fetchUserBorrowedBooks = () => async (dispatch) => {
   await axios
     .get("http://localhost:4000/api/v1/borrow/my-borrowed-books", {
       withCredentials: true,
-      headers: {
-        "Content-Type": "application/json",
-      },
     })
     .then((res) => {
       dispatch(

@@ -102,10 +102,10 @@ export const borrowedBooks = catchAsyncErrors(async (req, res, next) => {
 });
 export const getBorrowedBookForAdmin = catchAsyncErrors(
   async (req, res, next) => {
-    const borrowedBook = await Borrow.find();
+    const borrowedBooks = await Borrow.find();
     res.status(200).json({
       success: true,
-      borrowedBook,
+      borrowedBooks,
     });
   }
 );

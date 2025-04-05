@@ -14,9 +14,11 @@ import Header from "../layout/Header";
 const Catalog = () => {
   const dispatch = useDispatch();
   const { returnBookPopup } = useSelector((state) => state.popup);
+
   const { loading, error, allBorrowedBooks, message } = useSelector(
-    (state) => state.borrow
+    (state) => state?.borrow
   );
+
 
   const [filter, setFilter] = useState("borrowed");
   const formDateAndTime = (timeStamp) => {
@@ -46,6 +48,7 @@ const Catalog = () => {
     return dueDate <= currentDate;
   });
   const booksToDiplay = filter === "borrowed" ? borrowedBooks : overdueBooks;
+
   const [email, setEmail] = useState("");
   const [borrowedBookId, setBorrowBookId] = useState("");
   const openReturnedBookPopup = (bookId, email) => {
@@ -64,7 +67,7 @@ const Catalog = () => {
     if (error) {
       dispatch(resetBorrowslice());
     }
-  }, [dispatch, error, loading]);
+  }, [dispatch, error, loading, message]);
   return (
     <>
       <main className="relative flex-1 p-6 pt-28">
@@ -119,7 +122,7 @@ const Catalog = () => {
                     <td className="px-4  py-2">{book.price}</td>
                     <td className="px-4  py-2">{formatDate(book.dueDate)}</td>
                     <td className="px-4  py-2">
-                      {formDateAndTime(book.createAt)}
+                      {formDateAndTime(book.createdAt)}
                     </td>
                     <td className="px-4  py-2">
                       {book.returnDate ? (
@@ -144,7 +147,7 @@ const Catalog = () => {
           </h3>
         )}
       </main>
-      {returnBookPopup && <ReturnBookPopup />}
+      {returnBookPopup && <ReturnBookPopup bookId={borrowedBookId} email={email} />}
     </>
   );
 };
