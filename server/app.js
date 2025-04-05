@@ -11,9 +11,10 @@ import userRouter from "./routes/userRoute.js";
 import expressFileUpload from "express-fileupload";
 import { notifyUser } from "./services/notifyUser.js";
 import { removeUnverifiedAccounts } from "./services/removeUnverifiedAccount.js";
+import path from "path";
 config({ path: "./config/config.env" });
 export const app = express();
-
+const _dirname=path.resolve()
 app.use(
   cors({
     origin: [process.env.FRONTEND_URL],
@@ -38,3 +39,7 @@ notifyUser()
 removeUnverifiedAccounts()
 connectDB();
 app.use(errorMiddleware);
+app.use(express.static(path.join(_dirname,"/client/dist")))
+app.get('*',(req,res)=>{
+res.sendFile(path.resolve(_dirname,"client","dist","index.html"))
+})
