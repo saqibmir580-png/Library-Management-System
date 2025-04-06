@@ -14,7 +14,7 @@ import { removeUnverifiedAccounts } from "./services/removeUnverifiedAccount.js"
 import path from "path";
 config({ path: "./config/config.env" });
 export const app = express();
-const _dirname=path.resolve()
+const __dirname=path.resolve()
 app.use(
   cors({
     origin:"https://library-management-system-me5l.onrender.com",
@@ -39,7 +39,7 @@ notifyUser()
 removeUnverifiedAccounts()
 connectDB();
 app.use(errorMiddleware);
-app.use(express.static(path.join(_dirname,"/client/dist")))
+app.use(express.static(path.join(__dirname,"/client/dist")))
 app.get('*',(req,res)=>{
-res.sendFile(path.resolve(_dirname,"client","dist","index.html"))
+res.sendFile(path.resolve(__dirname,"client","dist","index.html"))
 })
